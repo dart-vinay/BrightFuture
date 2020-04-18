@@ -19,7 +19,7 @@ Clone the repository and from the root directory run:
 ```bash
 go run **.go
 ```
-To test the behaviour of out FutureTask we can create a new FutureTask using `ReturnAFuture` function in the `main.go` file which takes a task function to be performed and returns a `FutureTask` object. We can monitor out task and related details usind this object.
+To test the behaviour of out FutureTask we can create a new FutureTask using `ReturnAFuture` function in the `main.go` file which takes a task function to be performed and returns a `FutureTask` object. We can monitor out task and related details using this object.
 
 Go ahead and test it and let me know your thoughts over this.
 

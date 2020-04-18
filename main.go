@@ -32,7 +32,7 @@ func main(){
 	futureInstance1:= ReturnAFuture(func() (Result){
 			var res interface{}
 			res="30"
-			time.Sleep(2*time.Second)
+			time.Sleep(4*time.Second)
 			return Result{resultValue:res}
 	})
 	futureInstance2:= ReturnAFuture(func() (Result){
@@ -42,7 +42,7 @@ func main(){
 			return Result{resultValue:res}
 	})
 
-	fmt.Println(futureInstance2.getWithTimeout(4*time.Second))
+	fmt.Println(futureInstance2.getWithTimeout(3*time.Second))
 	fmt.Println(futureInstance2.result.error)
 	fmt.Println(futureInstance1.get())
 }

@@ -5,7 +5,6 @@ package main
 import(
   "time"
   "golang.org/x/net/context"
-  "fmt"
 )
 
 // Result structure returned by the future task
@@ -48,8 +47,8 @@ func (futureTask *FutureTask) getWithContext(ctx context.Context) Result{
   case <-ctx.Done():
     futureTask.done = true
     futureTask.success = false
-    futureTask.error = ctx.Err()
-    futureTask.result = Result{resultValue:nil,error:ctx.Err()}
+    futureTask.error = &InterruptError{errorString:"Request Timeout!"}
+    futureTask.result = Result{resultValue:nil,error:futureTask.error}
     return futureTask.result
   case futureTask.result = <-futureTask.interfaceChannel:
     if(futureTask.result.error!=nil){
@@ -65,6 +64,7 @@ func (futureTask *FutureTask) getWithContext(ctx context.Context) Result{
   }
 }
 
+// FutureTask implementation of isComplete() method for future interface
 func (futureTask *FutureTask) isComplete() bool{
   if(futureTask.done){
     return true
@@ -73,6 +73,7 @@ func (futureTask *FutureTask) isComplete() bool{
   }
 }
 
+// FutureTask implementation of isCancelled() method for future interface
 func (futureTask *FutureTask) isCancelled() bool{
   if(futureTask.done){
     if(futureTask.error!=nil && futureTask.error.Error()=="Cancelled Manually"){
@@ -81,14 +82,15 @@ func (futureTask *FutureTask) isCancelled() bool{
   }
   return false;
 }
-func (futureTask *FutureTask) cancel(){
-  if(futureTask.isComplete() || futureTask.isCancelled()){
-    return;
-  }
-  interruptionError := &InterruptError{errorString:"Cancelled Manually"}
-  futureTask.done = true
-  futureTask.success = false
-  futureTask.error = interruptionError
-  futureTask.result = Result{resultValue:nil,error:interruptionError}
-  // close(futureTask.interfaceChannel)
-}
+
+// func (futureTask *FutureTask) cancel(){
+//   if(futureTask.isComplete() || futureTask.isCancelled()){
+//     return;
+//   }
+//   interruptionError := &InterruptError{errorString:"Cancelled Manually"}
+//   futureTask.done = true
+//   futureTask.success = false
+//   futureTask.error = interruptionError
+//   futureTask.result = Result{resultValue:nil,error:interruptionError}
+//   // close(futureTask.interfaceChannel)
+// }

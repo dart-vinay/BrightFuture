@@ -7,7 +7,6 @@ import(
 )
 
 type Future interface {
-	cancel() 
 	get() Result
 	getWithTimeout(duration time.Duration) Result
 	isComplete() bool

@@ -11,4 +11,7 @@ type Future interface {
 	getWithTimeout(duration time.Duration) Result
 	isComplete() bool
 	isCancelled() bool
+  cancel()
+  addDoneCallback(callbackMethod func())
+  setException(error error)
 }

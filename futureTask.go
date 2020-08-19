@@ -22,7 +22,7 @@ type FutureTask struct{
   done bool            // returns true if the async task execution is complete
   error error          // returns errors(if any) during the execution
   result Result        // returns the result object
-	interfaceChannel <-chan Result // returns a channel to wait for the result
+	interfaceChannel chan Result // returns a channel to wait for the result
   callbackMethod func() //contains the callback method if any
 }
 
@@ -107,6 +107,7 @@ func (futureTask *FutureTask) cancel(){
   futureTask.success = false
   futureTask.error = interruptionError
   futureTask.result = Result{resultValue:nil,error:interruptionError}
+  futureTask.interfaceChannel <- futureTask.result
   // close(futureTask.interfaceChannel)
 }
 

@@ -3,7 +3,7 @@ package main
 import(
 	"fmt"
 	"time"
-)
+) 
 
 // Function to return a reference to future object that returns the result of the task provided in future.
 func ReturnAFuture(task func() (Result)) *FutureTask{

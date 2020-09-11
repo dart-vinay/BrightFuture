@@ -29,7 +29,6 @@ func ReturnAFuture(task func() (Result)) *FutureTask{
 	return &futureObject
 }
 
-
 //Main method
 func main(){
 
